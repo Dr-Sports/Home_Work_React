@@ -8,9 +8,12 @@ const Users =()=>{
 
 const counterPeople =()=>{
     const r = users.length%10
+    // const b = users.length%100
+    const b = users.length%100
+
     if (users.length==0){
       return  <p><span class="badge bg-danger">Никто не тусанет с тобой</span></p>
-    }else if(users.length==12||users.length==13||users.length==14){
+    }else if(b==12||b==13||b==14){
         return  <p><span class="badge bg-primary">{users.length} {"Человек тусанет с тобой сегодня "}</span></p>
      }else if (r>=2&&r<=4){
        return  <p><span class="badge bg-primary">{users.length} {"Человека тусанет с тобой сегодня "}</span></p>
