@@ -1,49 +1,34 @@
 import React ,{useState} from "react";
 import API from "../API";
+import BookMarck from "./bookMarck";
+import CounterPeople from "./countPeople";
+import Qualities from "./userQuality";
 
 const Users =()=>{
     const [users , setUsers] = useState(API.users.fetchAll())
 
 
-
-const counterPeople =()=>{
-    const r = users.length%10
-    // const b = users.length%100
-    const b = users.length%100
-
-    if (users.length==0){
-      return  <p><span class="badge bg-danger">Никто не тусанет с тобой</span></p>
-    }else if(b==12||b==13||b==14){
-        return  <p><span class="badge bg-primary">{users.length} {"Человек тусанет с тобой сегодня "}</span></p>
-     }else if (r>=2&&r<=4){
-       return  <p><span class="badge bg-primary">{users.length} {"Человека тусанет с тобой сегодня "}</span></p>
-    } else {return <p><span class="badge bg-primary">{users.length} {"Человек тусанет с тобой сегодня"}</span></p>}
-    }
-    
-
-
 const handleDelete =(id)=>{
 setUsers((prevState)=>prevState.filter(person=>{ return person._id!==id}))
 }
-    
 
 const renderPrise =()=>{
-
+ 
 const user =  users.map((user)=>{
     return  (
 <tr key={user._id} >
   <th>{user.name}</th>
-  <td key={user.completedMeetings} > {user.qualities.map((qualitie) => <span >{qualitie.name} </span>)}</td>
+  <Qualities user1={user.qualities} />
   <td >{user.profession.name}</td>
   <td >{user.completedMeetings}</td>
   <td >{user.rate}</td>
-  <td><button onClick={()=>handleDelete(user._id)}>delete</button></td>
+  <BookMarck  inv={user.bookmark} />
+  <td><button class="btn btn-primary" onClick={()=>handleDelete(user._id)}>delete</button></td>
+  
 
 </tr>
-
-  
     )})
-   return(<table class="table table-dark table-hover" >
+   return(<table class="table table table-hover" >
              <thead >
              <tr>
                <th scope="col">Имя</th>
@@ -51,7 +36,8 @@ const user =  users.map((user)=>{
                <th scope="col">Проффессия </th>
                <th scope="col">Встретился раз</th>
                <th scope="col">Оценка</th>
-               <th scope="col"></th>
+               <th>Избраное</th>
+               
              </tr>
              </thead>
              <tbody>
@@ -65,13 +51,11 @@ const user =  users.map((user)=>{
 
 return (
     <>
- <div>{counterPeople()}</div>
+    <CounterPeople   countPeople = {users.length}/>
 <div>{renderPrise()}</div>
-
     </>
-   
 )
-}
+}  
 
 
 export default Users
